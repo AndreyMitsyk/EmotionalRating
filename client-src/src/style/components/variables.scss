@@ -6,7 +6,7 @@ $sm-min: 768px;
 $xs-max: ($sm-min - 1);
 $md-min: 992px;
 $sm-max: ($md-min - 1);
-$lg-min: 1020px;
+$lg-min: 1200px;
 $md-max: ($lg-min - 1);
 
 // Usage
@@ -26,3 +26,5 @@ $btn-a: #0000ff;
 
 $font:  Tahoma, Verdana, sans-serif;
 $font-b: 'Trebuchet MS', Tahoma, sans-serif;
+
+$chart-size: 400px;

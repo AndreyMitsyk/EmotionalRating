@@ -107,16 +107,28 @@ gulp.task('js:build', function () {
         .pipe(reload({stream: true}));
 });
 
+gulp.task('js:dev', function () {
+    gulp.src(path.src.js)
+        .pipe(plumber())
+        .pipe(rigger())
+        .pipe(gulp.dest(path.build.js))
+        .pipe(reload({stream: true}));
+});
+
 gulp.task('style:build', function () {
     gulp.src(path.src.style)
         .pipe(plumber())
         .pipe(sass({includePaths: ['src/style']}))
-        // .pipe(sass({includePaths: ['src/style/']}).on('error', sass.logError))
-        // .pipe(sass({
-        //     includePaths: ['src/style/'],
-        //     outputStyle: 'compressed'
-        //     errLogToConsole: true
-        // }))
+        .pipe(prefixer())
+        .pipe(cleanCSS())
+        .pipe(gulp.dest(path.build.css))
+        .pipe(reload({stream: true}));
+});
+
+gulp.task('style:dev', function () {
+    gulp.src(path.src.style)
+        .pipe(plumber())
+        .pipe(sass({includePaths: ['src/style']}))
         .pipe(prefixer())
         .pipe(cleanCSS())
         .pipe(gulp.dest(path.build.css))
@@ -135,26 +147,38 @@ gulp.task('image:build', function () {
         .pipe(reload({stream: true}));
 });
 
-gulp.task('bundle', [
+gulp.task('bundle:build', [
     'html:build',
     'js:build',
     'style:build',
     'image:build'
 ]);
 
-gulp.task('build', function() {
-  runSequence('sprite', 'bundle');
+gulp.task('bundle:dev', [
+    'html:build',
+    'js:dev',
+    'style:dev',
+    'image:build'
+]);
+
+gulp.task('production', function() {
+  runSequence('sprite', 'bundle:build');
 });
+
+gulp.task('develop', function() {
+  runSequence('sprite', 'bundle:dev');
+});
+
 
 gulp.task('watch', function(){
     watch([path.watch.html], function(event, cb) {
         gulp.start('html:build');
     });
     watch([path.watch.style], function(event, cb) {
-        gulp.start('style:build');
+        gulp.start('style:dev');
     });
     watch([path.watch.js], function(event, cb) {
-        gulp.start('js:build');
+        gulp.start('js:dev');
     });
     watch([path.watch.img], function(event, cb) {
         gulp.start('image:build');
@@ -167,7 +191,7 @@ gulp.task('reboot', [
 ]);
 
 gulp.task('default', [
-    'build',
+    'develop',
     'webserver',
     'watch'
 ]);
