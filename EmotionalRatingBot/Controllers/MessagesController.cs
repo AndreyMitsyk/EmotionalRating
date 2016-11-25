@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Collections.Generic;
-using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
-using Newtonsoft.Json;
-using Microsoft.ProjectOxford.Emotion;
 using EmotionalRatingBot.Storage;
+using EmotionalRatingBot.Emotions;
 
 namespace EmotionalRatingBot
 {
@@ -31,17 +28,18 @@ namespace EmotionalRatingBot
                 {
                     var photo = activity.Attachments[0];
                     BlobStorageProvider blobProvider = new BlobStorageProvider();
-                    var imageUrl = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
-                    var emotions = await this.GetEmotions(imageUrl);
+                    EmotionProvider emotionProvider = new EmotionProvider();
+                    var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
+                    var emotions = await emotionProvider.GetEmotions(imageBlob.Uri.AbsoluteUri);
 
                     // TODO: add url with a results
-                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions.Scores.Happiness}");
+                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions[0].Scores.Happiness}");
                     var attachments = new List<Attachment>();
 
                     // TODO: return result photo
                     attachments.Add(new Attachment()
                     {
-                        ContentUrl = imageUrl,
+                        ContentUrl = imageBlob.Uri.AbsoluteUri,
                         ContentType = photo.ContentType,
                         Name = photo.Name
                     });
@@ -49,7 +47,7 @@ namespace EmotionalRatingBot
                 }
                 else
                 {
-                    reply = activity.CreateReply($"To participate in the rating send your selfie.");
+                    reply = activity.CreateReply($"Please send your selfie, to participate in the rating.");
                 }
 
                 await connector.Conversations.ReplyToActivityAsync(reply);
@@ -60,22 +58,6 @@ namespace EmotionalRatingBot
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
-        }
-
-        private async Task<Microsoft.ProjectOxford.Emotion.Contract.Emotion> GetEmotions(string imageUrl)
-        {
-            // TODO: replace sample API key
-            string OxfordAPIKey = "2cabd9f1b2014a04bc04782b3c703539";
-            EmotionServiceClient Oxford = new EmotionServiceClient(OxfordAPIKey);
-
-            var results = await Oxford.RecognizeAsync(imageUrl);
-
-            if (results != null && results.Length > 0)
-            {
-                var emotions = results[0];
-                return emotions;
-            }
-            return null;
         }
 
         private Activity HandleSystemMessage(Activity message)

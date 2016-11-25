@@ -9,7 +9,7 @@ namespace EmotionalRatingBot.Storage
 {
     public class BlobStorageProvider
     {
-        public string SaveImage(string url, string type)
+        public CloudBlockBlob SaveImage(string url, string type)
         {
             CloudStorageAccount storageAccount = this.CreateCloudStorageAccount();
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
@@ -22,7 +22,7 @@ namespace EmotionalRatingBot.Storage
             var imageStream = this.GetStreamFromUrl(url);
             blockBlob.UploadFromStream(imageStream);
 
-            return blockBlob.Uri.AbsoluteUri;
+            return blockBlob;
         }
 
         private CloudStorageAccount CreateCloudStorageAccount()
