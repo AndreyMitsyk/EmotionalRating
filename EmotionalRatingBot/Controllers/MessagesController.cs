@@ -50,6 +50,7 @@ namespace EmotionalRatingBot
                     }
                     else
                     {
+                        await imageBlob.DeleteAsync();
                         reply = activity.CreateReply($"Sorry. Faces were not found.");
                     }
                 }

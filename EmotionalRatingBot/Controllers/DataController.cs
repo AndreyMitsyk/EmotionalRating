@@ -17,7 +17,7 @@ namespace EmotionalRatingBot
         /// GET: api/Data
         /// </summary>
         [HttpGet]
-        public async Task<HttpResponseMessage> Get()
+        public HttpResponseMessage Get()
         {
             TableStorageProvider tableStorageProvider = new TableStorageProvider();
             var charData = tableStorageProvider.GetChartData();

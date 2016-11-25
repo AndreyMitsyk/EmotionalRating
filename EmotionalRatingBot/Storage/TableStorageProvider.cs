@@ -1,5 +1,4 @@
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;
+﻿using Microsoft.WindowsAzure.Storage.Table;
 using EmotionalRatingBot.CognitiveServices;
 using System.Collections.Generic;
 
@@ -63,7 +62,6 @@ namespace EmotionalRatingBot.Storage
             }
 
             int goodEmotions = 0;
-            int allEmotions = 0;
 
             foreach(var emotion in emotionData)
             {
@@ -71,9 +69,8 @@ namespace EmotionalRatingBot.Storage
                 {
                     goodEmotions += emotion.Value;
                 }
-                allEmotions += emotion.Value;
             }
-            chartData.PrimaryRating = goodEmotions / allEmotions * 100;
+            chartData.PrimaryRating = goodEmotions / totalCount * 100;
 
             return chartData;
         }
