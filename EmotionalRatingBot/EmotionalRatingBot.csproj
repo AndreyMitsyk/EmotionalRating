@@ -135,10 +135,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\CompositeImage.cs" />
+    <Compile Include="Common\CompositeImageMetadata.cs" />
+    <Compile Include="Common\IProcessingOrder.cs" />
+    <Compile Include="Common\IProcessingCallback.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ImageCore\ImageProcessingService.cs" />
+    <Compile Include="ImageCore\LiteImageMask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
