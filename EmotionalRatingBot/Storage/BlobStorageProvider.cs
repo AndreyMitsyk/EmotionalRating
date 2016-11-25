@@ -11,7 +11,7 @@ namespace EmotionalRatingBot.Storage
     {
         public CloudBlockBlob SaveImage(string url, string type)
         {
-            CloudStorageAccount storageAccount = this.CreateCloudStorageAccount();
+            CloudStorageAccount storageAccount = ConfigurationProvider.CreateCloudStorageAccount();
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
             CloudBlobContainer container = blobClient.GetContainerReference("photos");
 
@@ -28,11 +28,6 @@ namespace EmotionalRatingBot.Storage
         public void UpdateBlob(CloudBlockBlob blob, Stream imageStream)
         {
             blob.UploadFromStream(imageStream);
-        }
-
-        private CloudStorageAccount CreateCloudStorageAccount()
-        {
-            return CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
         }
 
         private Stream GetStreamFromUrl(string url)

@@ -6,7 +6,7 @@ using System.Web.Http;
 using System.Collections.Generic;
 using Microsoft.Bot.Connector;
 using EmotionalRatingBot.Storage;
-using EmotionalRatingBot.Emotions;
+using EmotionalRatingBot.CognitiveServices;
 
 namespace EmotionalRatingBot
 {
