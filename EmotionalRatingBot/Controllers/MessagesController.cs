@@ -9,6 +9,7 @@ using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 using Microsoft.ProjectOxford.Emotion;
+using EmotionalRatingBot.Storage;
 
 namespace EmotionalRatingBot
 {
@@ -29,7 +30,9 @@ namespace EmotionalRatingBot
                 if (activity.Attachments.Count > 0)
                 {
                     var photo = activity.Attachments[0];
-                    var emotions = await this.GetEmotions("https://i.gyazo.com/175456ab2f6c3862666abcd31f3656ce.jpg");//(photo.ContentUrl);
+                    BlobStorageProvider blobProvider = new BlobStorageProvider();
+                    var imageUrl = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
+                    var emotions = await this.GetEmotions(imageUrl);
 
                     // TODO: add url with a results
                     reply = activity.CreateReply($"Thanks for your rating!\n {emotions.Scores.Happiness}");
@@ -38,7 +41,7 @@ namespace EmotionalRatingBot
                     // TODO: return result photo
                     attachments.Add(new Attachment()
                     {
-                        ContentUrl = photo.ContentUrl,
+                        ContentUrl = imageUrl,
                         ContentType = photo.ContentType,
                         Name = photo.Name
                     });
