@@ -8,3 +8,7 @@ body {
   color: #000;
   background-color: #fff;
 }
+
+.js-plotly-plot .plotly:hover .modebar--hover {
+  display: none;
+}
