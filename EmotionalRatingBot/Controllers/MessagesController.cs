@@ -39,7 +39,7 @@ namespace EmotionalRatingBot
                     // TODO: remove test code---------------------------------------------------
 
                     // TODO: add url with a results
-                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions[0].Scores.Happiness}, {faces[0].FaceAttributes.Age}, {faces[0].FaceAttributes.Gender}");
+                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions[0].Scores.Happiness}, {faces[0].FaceAttributes.Gender}");
                     var attachments = new List<Attachment>();
 
                     // TODO: return result photo

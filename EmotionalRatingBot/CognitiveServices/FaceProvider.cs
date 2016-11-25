@@ -12,7 +12,6 @@ namespace EmotionalRatingBot.CognitiveServices
 
             FaceServiceClient OxFaceRecognizer = new FaceServiceClient(OxfordAPIKey);
             var requiredFaceAttributes = new FaceAttributeType[] {
-                FaceAttributeType.Age,
                 FaceAttributeType.Gender
             };
             var faces = await OxFaceRecognizer.DetectAsync(imageUrl, false, false, requiredFaceAttributes);

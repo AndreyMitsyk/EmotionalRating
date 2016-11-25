@@ -196,6 +196,7 @@
     <Compile Include="Common\CompositeImageMetadata.cs" />
     <Compile Include="Common\IProcessingOrder.cs" />
     <Compile Include="Common\IProcessingCallback.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="CognitiveServices\EmotionProvider.cs" />
     <Compile Include="CognitiveServices\Emotions.cs" />
@@ -207,7 +208,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Storage\BlobStorageProvider.cs" />
+    <Compile Include="Storage\ChartData.cs" />
     <Compile Include="Storage\ConfigurationProvider.cs" />
+    <Compile Include="Storage\EmotionData.cs" />
     <Compile Include="Storage\SelfieData.cs" />
     <Compile Include="Storage\TableStorageProvider.cs" />
   </ItemGroup>
