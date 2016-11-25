@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Storage;
+﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 
 namespace EmotionalRatingBot.Storage
 {
     public class TableStorageProvider
     {
-        public void test()
+        public void SaveData(SelfieData selfieData)
         {
             CloudStorageAccount storageAccount = ConfigurationProvider.CreateCloudStorageAccount();
             // Create the table client.
@@ -22,6 +17,10 @@ namespace EmotionalRatingBot.Storage
             // Create the table if it doesn't exist.
             table.CreateIfNotExists();
 
+            TableOperation insertOperation = TableOperation.Insert(selfieData);
+
+            // Execute the insert operation.
+            table.Execute(insertOperation);
         }
     }
 }
