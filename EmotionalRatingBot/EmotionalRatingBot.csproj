@@ -181,6 +181,14 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
+    <None Include="Resources\angry.png" />
+    <None Include="Resources\contempt.png" />
+    <None Include="Resources\disgust.png" />
+    <None Include="Resources\fear.png" />
+    <None Include="Resources\happiness.png" />
+    <None Include="Resources\neutral.png" />
+    <None Include="Resources\sadness.png" />
+    <None Include="Resources\surprise.png" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.1.js" />
@@ -192,10 +200,6 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CognitiveServices\FaceProvider.cs" />
-    <Compile Include="Common\CompositeImage.cs" />
-    <Compile Include="Common\CompositeImageMetadata.cs" />
-    <Compile Include="Common\IProcessingOrder.cs" />
-    <Compile Include="Common\IProcessingCallback.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="CognitiveServices\EmotionProvider.cs" />
@@ -204,8 +208,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ImageCore\ImageProcessingService.cs" />
+    <Compile Include="ImageCore\ImageReactor.cs" />
     <Compile Include="ImageCore\LiteImageMask.cs" />
+    <Compile Include="ImageCore\SmileStickerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Storage\BlobStorageProvider.cs" />
     <Compile Include="Storage\ChartData.cs" />
@@ -223,7 +234,15 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
