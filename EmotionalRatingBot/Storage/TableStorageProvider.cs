@@ -1,22 +1,24 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using EmotionalRatingBot.CognitiveServices;
+using System.Collections.Generic;
 
 namespace EmotionalRatingBot.Storage
 {
     public class TableStorageProvider
     {
+        private const string EventName = "HAKVELON";
+        // Create the table client.
+        private CloudTableClient tableClient = ConfigurationProvider.CreateCloudStorageAccount().CreateCloudTableClient();
+
         public void SaveData(SelfieData selfieData)
         {
-            CloudStorageAccount storageAccount = ConfigurationProvider.CreateCloudStorageAccount();
-            // Create the table client.
-            CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
-
             // Retrieve a reference to the table.
             CloudTable table = tableClient.GetTableReference("SelfieData");
 
             // Create the table if it doesn't exist.
             table.CreateIfNotExists();
+            selfieData.Event = EventName;
 
             TableOperation insertOperation = TableOperation.Insert(selfieData);
 
@@ -26,23 +28,54 @@ namespace EmotionalRatingBot.Storage
 
         public ChartData GetChartData()
         {
+            // Retrieve a reference to the table.
+            CloudTable table = tableClient.GetTableReference("SelfieData");
+            TableQuery<SelfieData> query = new TableQuery<SelfieData>().Where(TableQuery.GenerateFilterCondition("Event", QueryComparisons.Equal, EventName));
+            var chartData = new ChartData();
+            Dictionary<string, int> emotionData = new Dictionary<string, int>();
+            int maleCount = 0;
+            int totalCount = 0;
+            var tableData = table.ExecuteQuery(query);
 
-            var testData = new ChartData();
-            EmotionData[] emotionData = new EmotionData[] {
-                new EmotionData { Name = Emotions.emotion.Anger.ToString(), Count = 1 },
-                new EmotionData { Name = Emotions.emotion.Contempt.ToString(), Count = 2 },
-                new EmotionData { Name = Emotions.emotion.Disgust.ToString(), Count = 0 },
-                new EmotionData { Name = Emotions.emotion.Fear.ToString(), Count = 1 },
-                new EmotionData { Name = Emotions.emotion.Happiness.ToString(), Count = 5 },
-                new EmotionData { Name = Emotions.emotion.Neutral.ToString(), Count = 5 },
-                new EmotionData { Name = Emotions.emotion.Sadness.ToString(), Count = 2 },
-                new EmotionData { Name = Emotions.emotion.Surprise.ToString(), Count = 4 }
-            };
+            foreach (SelfieData entity in tableData)
+            {
+                string emotionName = entity.RowKey;
+                if (emotionData.ContainsKey(emotionName))
+                {
+                    emotionData[emotionName] = emotionData[emotionName] + 1;
+                } else
+                {
+                    emotionData.Add(emotionName, 1);
+                }
+                if (entity.Sex == "male")
+                {
+                    maleCount++;
+                }
+                totalCount++;
+            }
 
-            testData.Emotions = emotionData;
-            testData.PrimaryRating = 90;
-            testData.Sex = 60;
-            return testData;
+            if (totalCount != 0)
+            {
+                chartData.Sex = maleCount / totalCount * 100;
+            } else
+            {
+                chartData.Sex = 50;
+            }
+
+            int goodEmotions = 0;
+            int allEmotions = 0;
+
+            foreach(var emotion in emotionData)
+            {
+                if (emotion.Key == Emotions.emotion.Happiness.ToString() || emotion.Key == Emotions.emotion.Surprise.ToString() || emotion.Key == Emotions.emotion.Neutral.ToString())
+                {
+                    goodEmotions += emotion.Value;
+                }
+                allEmotions += emotion.Value;
+            }
+            chartData.PrimaryRating = goodEmotions / allEmotions * 100;
+
+            return chartData;
         }
     }
 }
