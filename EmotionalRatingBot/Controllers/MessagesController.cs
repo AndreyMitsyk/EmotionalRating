@@ -31,14 +31,14 @@ namespace EmotionalRatingBot
                     var photo = activity.Attachments[0];
                     BlobStorageProvider blobProvider = new BlobStorageProvider();
                     var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
-                    // TODO: remove test code---------------------------------------------------
                     FaceProvider faceProvider = new FaceProvider();
                     var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
 
                     if (faces != null)
                     {
-                        reply = activity.CreateReply($"Thanks for your rating!\n {faces[0].FaceAttributes.Gender}");
-                        await ImageProcessingService.GetService().Process(imageBlob);
+                        // TODO: add link
+                        reply = activity.CreateReply($"Thanks for your rating!\n See more results here:");
+                        await ImageProcessingService.GetService().Process(imageBlob, faces);
                         var attachments = new List<Attachment>();
                         attachments.Add(new Attachment()
                         {

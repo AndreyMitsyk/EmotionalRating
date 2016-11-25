@@ -12,10 +12,12 @@
 
     using Microsoft.ProjectOxford.Emotion.Contract;
     using Microsoft.WindowsAzure.Storage.Blob;
+    using Microsoft.ProjectOxford.Face.Contract;
 
     public class ImageProcessingService
     {
         private EmotionProvider emotionProvider;
+        private TableStorageProvider tableStorageProvider;
 
         private ImageReactor reactor;
 
@@ -28,27 +30,33 @@
         private ImageProcessingService()
         {
             this.emotionProvider = new EmotionProvider();
+            this.tableStorageProvider = new TableStorageProvider();
             this.reactor = new ImageReactor();
         }
         #endregion
 
-        public async Task Process(CloudBlockBlob imageBlob)
+        public async Task Process(CloudBlockBlob imageBlob, Face[] faces)
         {
             Emotion[] emotions = await this.emotionProvider.GetEmotions(imageBlob.Uri.AbsoluteUri);
-            this.UpdateImage(imageBlob, emotions);
+            this.UpdateImage(imageBlob, emotions, faces);
         }
 
-        private void UpdateImage(CloudBlockBlob imageBlob, Emotion[] emotions)
+        private void UpdateImage(CloudBlockBlob imageBlob, Emotion[] emotions, Face[] faces)
         {
             var image = this.LoadImage(imageBlob.Uri.AbsoluteUri);
+            int i = 0;
             foreach (var emotion in emotions)
             {
+                var maxEmotion = emotionProvider.GetMaxEmotion(emotion);
                 var rectangle = new Rectangle(
                     emotion.FaceRectangle.Left,
                     emotion.FaceRectangle.Top,
                     emotion.FaceRectangle.Width,
                     emotion.FaceRectangle.Height);
-                reactor.Decorate(image, rectangle, emotionProvider.GetMaxEmotion(emotion));
+                reactor.Decorate(image, rectangle, maxEmotion.EmotionName);
+                tableStorageProvider.SaveData(maxEmotion, faces[i], imageBlob.Uri.AbsoluteUri);
+
+                i++;
             }
             SaveImage(imageBlob, image);
         }

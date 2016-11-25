@@ -191,6 +191,7 @@
     <Compile Include="Storage\BlobStorageProvider.cs" />
     <Compile Include="Storage\ChartData.cs" />
     <Compile Include="Storage\ConfigurationProvider.cs" />
+    <Compile Include="Storage\EmotionData.cs" />
     <Compile Include="Storage\SelfieData.cs" />
     <Compile Include="Storage\TableStorageProvider.cs" />
   </ItemGroup>

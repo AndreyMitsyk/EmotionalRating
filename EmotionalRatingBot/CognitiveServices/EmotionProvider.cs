@@ -21,17 +21,20 @@ namespace EmotionalRatingBot.CognitiveServices
             return null;
         }
 
-        public Emotions.emotion GetMaxEmotion(Microsoft.ProjectOxford.Emotion.Contract.Emotion personEmotion)
+        public Emotions GetMaxEmotion(Microsoft.ProjectOxford.Emotion.Contract.Emotion personEmotion)
         {
             var emotions = personEmotion.Scores.ToRankedList();
-            float maxValue = 0;
-            Emotions.emotion maxEmotion = Emotions.emotion.Happiness;
+
+            Emotions maxEmotion = new Emotions {
+                EmotionName = Emotions.emotion.Happiness,
+                EmotionValue = 0
+            };
             foreach (var emotion in emotions)
             {
-                if (emotion.Value > maxValue)
+                if (emotion.Value > maxEmotion.EmotionValue)
                 {
-                    maxValue = emotion.Value;
-                    maxEmotion = (Emotions.emotion)Enum.Parse(typeof(Emotions.emotion), emotion.Key);
+                    maxEmotion.EmotionValue = emotion.Value;
+                    maxEmotion.EmotionName = (Emotions.emotion)Enum.Parse(typeof(Emotions.emotion), emotion.Key);
                 }
             }
             return maxEmotion;
