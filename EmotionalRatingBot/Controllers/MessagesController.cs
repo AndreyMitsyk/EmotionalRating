@@ -28,12 +28,18 @@ namespace EmotionalRatingBot
                 {
                     var photo = activity.Attachments[0];
                     BlobStorageProvider blobProvider = new BlobStorageProvider();
-                    EmotionProvider emotionProvider = new EmotionProvider();
                     var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
+
+                    // TODO: remove test code---------------------------------------------------
+                    EmotionProvider emotionProvider = new EmotionProvider();
+                    FaceProvider faceProvider = new FaceProvider();
+
                     var emotions = await emotionProvider.GetEmotions(imageBlob.Uri.AbsoluteUri);
+                    var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
+                    // TODO: remove test code---------------------------------------------------
 
                     // TODO: add url with a results
-                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions[0].Scores.Happiness}");
+                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions[0].Scores.Happiness}, {faces[0].FaceAttributes.Age}, {faces[0].FaceAttributes.Gender}");
                     var attachments = new List<Attachment>();
 
                     // TODO: return result photo
