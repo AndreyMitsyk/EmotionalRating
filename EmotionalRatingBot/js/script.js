@@ -72,36 +72,38 @@ var gaugeVisualization = function(value) {
 
   Plotly.newPlot('gauge-chart', gaugeData, gaugeLayout);
 };
-(function() {
-  // Bar chart
-  var barVisualization = function(values) {
-    var barTrace1 = {
-      x: ['Feature A', 'Feature B', 'Feature C', 'Feature D', 'Feature E'],
-      y: values,
-      marker:{
-        color: ['rgba(204,204,204,1)', 'rgba(222,45,38,0.8)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)', 'rgba(204,204,204,1)']
-      },
-      type: 'bar'
-    };
+// Bar chart
+var barVisualization = function(values) {
+  var emotionNames = values.map(function(emotion){
+    return emotion.name;
+  });
 
-    var barData = [barTrace1];
+  var emotionCounts = values.map(function(emotion){
+    return emotion.count;
+  });
 
-    var barLayout = {
-      title: 'Emotions'
-    };
-
-    Plotly.newPlot('bar-chart', barData, barLayout);
+  var barTrace1 = {
+    x: emotionNames,
+    y: emotionCounts,
+    marker: {
+      color: 'rgb(158,202,225)',
+      opacity: 0.6,
+      line: {
+        color: 'rbg(8,48,107)',
+        width: 1.5
+      }
+    },
+    type: 'bar'
   };
 
-  barVisualization([20, 14, 23, 25, 22]);
+  var barData = [barTrace1];
 
-  var refreshBtn = document.getElementById('refresh-bar');
-  refreshBtn.addEventListener('click', refreshBar);
-
-  function refreshBar() {
-    barVisualization([2.5, 5.6, 10.1, 15, 25]);
+  var barLayout = {
+    title: 'Emotions'
   };
-}());
+
+  Plotly.newPlot('bar-chart', barData, barLayout);
+};
 // pie-chart
 var pieVisualization = function(value) {
   var pieData = [{
@@ -140,7 +142,7 @@ var getData = function(callback) {
     dashboards.classList.add('data-failure');
   };
 
-  xhr.timeout = 1000;
+  xhr.timeout = 5000;
   xhr.ontimeout = function() {
     dashboards.classList.remove('data-loading');
     dashboards.classList.add('data-failure');
@@ -155,14 +157,22 @@ var getData = function(callback) {
   getData(function(loadedData) {
     chartsData = loadedData;
     gaugeVisualization(chartsData.primaryRating);
+    barVisualization(chartsData.emotions);
     pieVisualization(chartsData.sex);
   });
 
-  // var refreshBtn = document.getElementById('refresh-gauge');
+  var refreshBtn = document.getElementById('refresh-gauge');
+  refreshBtn.addEventListener('click', refreshBar);
+
+  function refreshBar() {
+    gaugeVisualization(170);
+  };
+
+  // var refreshBtn = document.getElementById('refresh-bar');
   // refreshBtn.addEventListener('click', refreshBar);
 
   // function refreshBar() {
-  //   gaugeVisualization(170);
+  //   barVisualization([2.5, 5.6, 10.1, 15, 25]);
   // };
 
   // var refreshBtn = document.getElementById('refresh-pie');
