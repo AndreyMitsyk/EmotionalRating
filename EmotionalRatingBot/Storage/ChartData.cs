@@ -9,7 +9,7 @@ namespace EmotionalRatingBot.Storage
     {
         public int PrimaryRating { get; set; }
 
-        public EmotionData[] Emotions { get; set; }
+        public IDictionary<string, int> Emotions { get; set; }
 
         public float Sex { get; set; }
     }

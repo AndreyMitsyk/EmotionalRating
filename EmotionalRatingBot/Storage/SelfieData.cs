@@ -22,5 +22,7 @@ namespace EmotionalRatingBot.Storage
         public string Sex { get; set; }
 
         public int Age { get; set; }
+
+        public string Event { get; set; }
     }
 }

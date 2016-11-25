@@ -19,7 +19,7 @@ namespace EmotionalRatingBot.Storage
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(imageName);
 
             // Create the blob with contents from a file.
-            var imageStream = this.GetStreamFromUrl(url);
+            var imageStream = GetStreamFromUrl(url);
             this.UpdateBlob(blockBlob, imageStream);
 
             return blockBlob;
@@ -30,7 +30,7 @@ namespace EmotionalRatingBot.Storage
             blob.UploadFromStream(imageStream);
         }
 
-        private Stream GetStreamFromUrl(string url)
+        public static Stream GetStreamFromUrl(string url)
         {
             byte[] imageData = null;
 

@@ -10,6 +10,8 @@ using EmotionalRatingBot.CognitiveServices;
 
 namespace EmotionalRatingBot
 {
+    using EmotionalRatingBot.ImageCore;
+
     [BotAuthentication]
     public class MessagesController : ApiController
     {
@@ -29,27 +31,28 @@ namespace EmotionalRatingBot
                     var photo = activity.Attachments[0];
                     BlobStorageProvider blobProvider = new BlobStorageProvider();
                     var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
-
                     // TODO: remove test code---------------------------------------------------
-                    EmotionProvider emotionProvider = new EmotionProvider();
                     FaceProvider faceProvider = new FaceProvider();
-
-                    var emotions = await emotionProvider.GetEmotions(imageBlob.Uri.AbsoluteUri);
                     var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
-                    // TODO: remove test code---------------------------------------------------
 
-                    // TODO: add url with a results
-                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions[0].Scores.Happiness}, {faces[0].FaceAttributes.Gender}");
-                    var attachments = new List<Attachment>();
-
-                    // TODO: return result photo
-                    attachments.Add(new Attachment()
+                    if (faces != null)
                     {
-                        ContentUrl = imageBlob.Uri.AbsoluteUri,
-                        ContentType = photo.ContentType,
-                        Name = photo.Name
-                    });
-                    reply.Attachments = attachments;
+                        reply = activity.CreateReply($"Thanks for your rating!\n {faces[0].FaceAttributes.Gender}");
+                        await ImageProcessingService.GetService().Process(imageBlob);
+                        var attachments = new List<Attachment>();
+                        attachments.Add(new Attachment()
+                        {
+                            ContentUrl = imageBlob.Uri.AbsoluteUri,
+                            ContentType = photo.ContentType,
+                            Name = photo.Name
+                        });
+                        reply.Attachments = attachments;
+                    }
+                    else
+                    {
+                        await imageBlob.DeleteAsync();
+                        reply = activity.CreateReply($"Sorry. Faces were not found.");
+                    }
                 }
                 else
                 {
