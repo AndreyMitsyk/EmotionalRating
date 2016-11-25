@@ -155,7 +155,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\style.css" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\AkvelonRating - Web Deploy.pubxml" />
     <None Include="Resources\angry.png" />
     <None Include="Resources\contempt.png" />
     <None Include="Resources\disgust.png" />
@@ -164,6 +166,10 @@
     <None Include="Resources\neutral.png" />
     <None Include="Resources\sadness.png" />
     <None Include="Resources\surprise.png" />
+    <Content Include="img\img-shortcut.ico" />
+    <Content Include="img\logo-akvelon.png" />
+    <Content Include="index.html" />
+    <Content Include="js\script.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
