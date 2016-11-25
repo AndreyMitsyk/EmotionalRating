@@ -1,0 +1,15 @@
+.btn {
+  @include m-btn;
+}
+
+.chart-title {
+  margin: 0;
+  padding-bottom: 50px;
+  font-family: $font-b;
+  font-weight: bold;
+  font-size: 45px;
+  line-height: 50px;
+  @media (max-width: $xs-max) {
+    padding-bottom: 10px;
+  }
+}

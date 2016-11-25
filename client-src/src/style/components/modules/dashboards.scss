@@ -1,0 +1,11 @@
+.dashboards {
+  padding-top: 50px;
+  padding-bottom: 45px;
+  text-align: center;
+
+  .l-flex {
+    @media (max-width: $xs-max) {
+      display: block;
+    }
+  }
+}

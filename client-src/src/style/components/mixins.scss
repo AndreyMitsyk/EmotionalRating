@@ -1,0 +1,33 @@
+@mixin reset-ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin m-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 20px 0;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-family: $font-b;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  border: none;
+  outline: none;
+  color: #fff;
+  background-color: $btn-c;
+}
+
+@mixin m-icon($icon-name) {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    @include sprite($icon-name);
+  }
+}

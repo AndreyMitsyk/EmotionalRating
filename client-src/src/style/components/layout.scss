@@ -1,0 +1,11 @@
+.l-container {
+  position: relative;
+  max-width: $lg-min;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.l-flex {
+  display: flex;
+  justify-content: space-between;
+}
