@@ -74,16 +74,22 @@ namespace EmotionalRatingBot.Storage
                 chartData.Sex = 50;
             }
 
-            int goodEmotions = 0;
+            float goodEmotions = 0;
 
             foreach(var emotion in emotionData)
             {
-                if (emotion.Key == Emotions.emotion.Happiness.ToString() || emotion.Key == Emotions.emotion.Surprise.ToString() || emotion.Key == Emotions.emotion.Neutral.ToString())
+                if (emotion.Key == Emotions.emotion.Happiness.ToString())
                 {
                     goodEmotions += emotion.Value.Value;
+                } else if (emotion.Key == Emotions.emotion.Surprise.ToString())
+                {
+                    goodEmotions += (float)(emotion.Value.Value * 0.6);
+                } else if(emotion.Key == Emotions.emotion.Neutral.ToString())
+                {
+                    goodEmotions += (float)(emotion.Value.Value * 0.25);
                 }
             }
-            chartData.PrimaryRating = (int)((float)goodEmotions / (float)totalCount * 100);
+            chartData.PrimaryRating = (int)(goodEmotions / (float)totalCount * 100);
             chartData.Emotions = emotionData;
 
             return chartData;
