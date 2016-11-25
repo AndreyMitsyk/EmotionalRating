@@ -15,8 +15,7 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     plumber = require('gulp-plumber'),
     jscs = require('gulp-jscs'),
-    htmlhint = require('gulp-htmlhint'),
-    spritesmith = require('gulp.spritesmith');
+    htmlhint = require('gulp-htmlhint');
 
 
 var path = {
@@ -24,17 +23,14 @@ var path = {
         html: '../EmotionalRatingBot/',
         js: '../EmotionalRatingBot/js/',
         css: '../EmotionalRatingBot/css/',
-        img: '../EmotionalRatingBot/img/',
-        spriteimg: 'src/img/',
-        spritecss: 'src/style/components/'
+        img: '../EmotionalRatingBot/img/'
     },
     src: {
         html: 'src/*.html',
         js: 'src/js/script.js',
         jsall: 'src/js/**/*.js',
         style: 'src/style/style.scss',
-        img: 'src/img/**/*.*',
-        sprite: 'src/img/sprite/*.*'
+        img: 'src/img/**/*.*'
     },
     watch: {
         html: 'src/**/*.html',
@@ -75,25 +71,9 @@ gulp.task('webserver', function () {
     browserSync(config);
 });
 
-gulp.task('sprite', function() {
-    var spriteData =
-        gulp.src(path.src.sprite) // путь, откуда берем картинки для спрайта
-            .pipe(spritesmith({
-                imgName: 'sprite.png',
-                cssName: 'sprite.scss',
-                cssFormat: 'scss',
-                algorithm: 'binary-tree',
-                imgPath: '../img/sprite.png'
-            }));
-
-    spriteData.img.pipe(gulp.dest(path.build.spriteimg)); // путь, куда сохраняем картинку
-    spriteData.css.pipe(gulp.dest(path.build.spritecss)); // путь, куда сохраняем стили
-});
-
 gulp.task('html:build', function () {
     gulp.src(path.src.html)
         .pipe(plumber())
-        .pipe(rigger())
         .pipe(gulp.dest(path.build.html))
         .pipe(reload({stream: true}));
 });
@@ -147,28 +127,19 @@ gulp.task('image:build', function () {
         .pipe(reload({stream: true}));
 });
 
-gulp.task('bundle:build', [
+gulp.task('production', [
     'html:build',
     'js:build',
     'style:build',
     'image:build'
 ]);
 
-gulp.task('bundle:dev', [
+gulp.task('develop', [
     'html:build',
     'js:dev',
     'style:dev',
     'image:build'
 ]);
-
-gulp.task('production', function() {
-  runSequence('sprite', 'bundle:build');
-});
-
-gulp.task('develop', function() {
-  runSequence('sprite', 'bundle:dev');
-});
-
 
 gulp.task('watch', function(){
     watch([path.watch.html], function(event, cb) {

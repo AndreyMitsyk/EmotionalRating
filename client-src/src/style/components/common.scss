@@ -1,0 +1,33 @@
+body {
+  min-width: $min-width;
+  font-family: $font;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.42857143;
+  color: #000;
+  background-color: #fff;
+}
+
+.btn {
+  @include m-btn;
+  &:hover {
+    background-color: $btn-h;
+    color: #fff;
+  }
+  &:active {
+    color: $btn-a;
+    opacity: 1;
+  }
+}
+
+.l-container {
+  position: relative;
+  max-width: $lg-min;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+.l-flex {
+  display: flex;
+  justify-content: space-between;
+}

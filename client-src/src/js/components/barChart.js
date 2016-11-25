@@ -1,12 +1,12 @@
 // Bar chart
 var barVisualization = function(values) {
-  var emotionNames = values.map(function(emotion){
-    return emotion.name;
-  });
+  var emotionNames = [];
+  var emotionCounts = [];
 
-  var emotionCounts = values.map(function(emotion){
-    return emotion.count;
-  });
+  for (var key in values) {
+    emotionNames.push(key);
+    emotionCounts.push(values[key].value);
+  }
 
   var barTrace1 = {
     x: emotionNames,

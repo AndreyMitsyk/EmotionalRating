@@ -1,31 +1,34 @@
 (function() {
   var chartsData = {};
 
-  getData(function(loadedData) {
-    chartsData = loadedData;
-    gaugeVisualization(chartsData.primaryRating);
-    barVisualization(chartsData.emotions);
-    pieVisualization(chartsData.sex);
-  });
-
-  var refreshBtn = document.getElementById('refresh-gauge');
-  refreshBtn.addEventListener('click', refreshBar);
-
-  function refreshBar() {
-    gaugeVisualization(170);
+  var paintData = function() {
+    getData(function(loadedData) {
+      chartsData = loadedData;
+      gaugeVisualization(chartsData.primaryRating);
+      barVisualization(chartsData.emotions);
+      pieVisualization(chartsData.sex);
+    });
   };
 
-  // var refreshBtn = document.getElementById('refresh-bar');
-  // refreshBtn.addEventListener('click', refreshBar);
+  paintData();
 
-  // function refreshBar() {
-  //   barVisualization([2.5, 5.6, 10.1, 15, 25]);
-  // };
+  var refreshBtn = document.getElementById('refresh-btn');
+  refreshBtn.addEventListener('click', paintData);
 
-  // var refreshBtn = document.getElementById('refresh-pie');
-  // refreshBtn.addEventListener('click', refreshPie);
+  // создать подключение
+  var socket = new WebSocket("ws://localhost:8081");
 
-  // function refreshPie() {
-  //   pieVisualization([50, 40, 10]);
-  // };
+  // обработчик входящих сообщений
+  socket.onmessage = function(event) {
+    console.log(event.data);
+    // paintData();
+  };
+
+  socket.onopen = function() {
+    console.log('Open connection');
+  };
+
+  socket.onclose = function() {
+    console.log('Close connection');
+  };
 }());

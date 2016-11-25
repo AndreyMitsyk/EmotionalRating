@@ -1,0 +1,43 @@
+.page-header {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  color: #fff;
+  background-color: $bg-head;
+  a {
+    color: #fff;
+  }
+}
+
+.dashboards {
+  padding-top: 50px;
+  padding-bottom: 45px;
+  text-align: center;
+
+  .l-flex {
+    @media (max-width: $xs-max) {
+      display: block;
+    }
+  }
+}
+
+.chart {
+  width: $chart-size;
+  height: $chart-size;
+}
+
+.js-plotly-plot .plotly:hover .modebar--hover {
+  display: none;
+}
+
+.page-footer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: $bg-foot;
+  text-align: right;
+  color: #fff;
+}
+
+.logo-akvelon {
+  width: 200px;
+  height: auto;
+}

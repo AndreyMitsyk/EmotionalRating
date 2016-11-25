@@ -21,7 +21,7 @@ var getData = function(callback) {
     dashboards.classList.add('data-failure');
   };
 
-  xhr.timeout = 5000;
+  xhr.timeout = 10000;
   xhr.ontimeout = function() {
     dashboards.classList.remove('data-loading');
     dashboards.classList.add('data-failure');

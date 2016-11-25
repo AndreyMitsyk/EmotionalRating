@@ -4,7 +4,8 @@ var pieVisualization = function(value) {
     values: [value, 100 - value],
     labels: ['male', 'female'],
     hole: .4,
-    type: 'pie'
+    type: 'pie',
+    hoverinfo: 'label+percent'
   }];
 
   var pieLayout = {
