@@ -68,7 +68,7 @@ namespace EmotionalRatingBot.Storage
 
             if (totalCount != 0)
             {
-                chartData.Sex = maleCount / totalCount * 100;
+                chartData.Sex = (float)maleCount / (float)totalCount * 100;
             } else
             {
                 chartData.Sex = 50;
@@ -83,7 +83,7 @@ namespace EmotionalRatingBot.Storage
                     goodEmotions += emotion.Value.Value;
                 }
             }
-            chartData.PrimaryRating = goodEmotions / totalCount * 100;
+            chartData.PrimaryRating = (int)((float)goodEmotions / (float)totalCount * 100);
             chartData.Emotions = emotionData;
 
             return chartData;
