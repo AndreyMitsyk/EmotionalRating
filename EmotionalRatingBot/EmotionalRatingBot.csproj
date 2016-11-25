@@ -200,6 +200,7 @@
     <Compile Include="ImageCore\ImageProcessingService.cs" />
     <Compile Include="ImageCore\LiteImageMask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="Storage\BlobStorageProvider.cs" />
     <Compile Include="Storage\ConfigurationProvider.cs" />
     <Compile Include="Storage\SelfieData.cs" />
