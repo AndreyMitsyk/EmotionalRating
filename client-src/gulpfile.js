@@ -21,10 +21,10 @@ var gulp = require('gulp'),
 
 var path = {
     build: {
-        html: '../',
-        js: '../js/',
-        css: '../css/',
-        img: '../img/',
+        html: '../EmotionalRatingBot/',
+        js: '../EmotionalRatingBot/js/',
+        css: '../EmotionalRatingBot/css/',
+        img: '../EmotionalRatingBot/img/',
         spriteimg: 'src/img/',
         spritecss: 'src/style/components/'
     },
@@ -46,7 +46,7 @@ var path = {
 
 var config = {
     server: {
-        baseDir: "../"
+        baseDir: "../EmotionalRatingBot/"
     },
     //tunnel: true,
     host: 'localhost',
