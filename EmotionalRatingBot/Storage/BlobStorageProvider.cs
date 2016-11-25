@@ -20,9 +20,14 @@ namespace EmotionalRatingBot.Storage
 
             // Create the blob with contents from a file.
             var imageStream = this.GetStreamFromUrl(url);
-            blockBlob.UploadFromStream(imageStream);
+            this.UpdateBlob(blockBlob, imageStream);
 
             return blockBlob;
+        }
+
+        public void UpdateBlob(CloudBlockBlob blob, Stream imageStream)
+        {
+            blob.UploadFromStream(imageStream);
         }
 
         private CloudStorageAccount CreateCloudStorageAccount()
