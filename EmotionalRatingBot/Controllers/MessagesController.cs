@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
+using Microsoft.ProjectOxford.Emotion;
 
 namespace EmotionalRatingBot
 {
@@ -28,16 +29,18 @@ namespace EmotionalRatingBot
                 if (activity.Attachments.Count > 0)
                 {
                     var photo = activity.Attachments[0];
-                    // TODO: send photo to cognitive services
+                    var emotions = await this.GetEmotions("https://i.gyazo.com/175456ab2f6c3862666abcd31f3656ce.jpg");//(photo.ContentUrl);
 
                     // TODO: add url with a results
-                    reply = activity.CreateReply($"Thanks for your rating!");
+                    reply = activity.CreateReply($"Thanks for your rating!\n {emotions.Scores.Happiness}");
                     var attachments = new List<Attachment>();
+
+                    // TODO: return result photo
                     attachments.Add(new Attachment()
                     {
-                        ContentUrl = "https://upload.wikimedia.org/wikipedia/en/a/a6/Bender_Rodriguez.png",
-                        ContentType = "image/png",
-                        Name = "Bender_Rodriguez.png"
+                        ContentUrl = photo.ContentUrl,
+                        ContentType = photo.ContentType,
+                        Name = photo.Name
                     });
                     reply.Attachments = attachments;
                 }
@@ -54,6 +57,22 @@ namespace EmotionalRatingBot
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
+        }
+
+        private async Task<Microsoft.ProjectOxford.Emotion.Contract.Emotion> GetEmotions(string imageUrl)
+        {
+            // TODO: replace sample API key
+            string OxfordAPIKey = "2cabd9f1b2014a04bc04782b3c703539";
+            EmotionServiceClient Oxford = new EmotionServiceClient(OxfordAPIKey);
+
+            var results = await Oxford.RecognizeAsync(imageUrl);
+
+            if (results != null && results.Length > 0)
+            {
+                var emotions = results[0];
+                return emotions;
+            }
+            return null;
         }
 
         private Activity HandleSystemMessage(Activity message)
