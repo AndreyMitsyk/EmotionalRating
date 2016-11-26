@@ -53,7 +53,7 @@ var gaugeVisualization = function(value) {
           color: '850000'
         }
       }],
-    title: 'Favorite emotion',
+    title: 'Common rating',
     xaxis: {zeroline:false, showticklabels:false,
                showgrid: false, range: [-1, 1]},
     yaxis: {zeroline:false, showticklabels:false,

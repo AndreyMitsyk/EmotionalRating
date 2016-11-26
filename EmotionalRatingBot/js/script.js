@@ -64,7 +64,7 @@ var gaugeVisualization = function(value) {
           color: '850000'
         }
       }],
-    title: 'Favorite emotion',
+    title: 'Common rating',
     xaxis: {zeroline:false, showticklabels:false,
                showgrid: false, range: [-1, 1]},
     yaxis: {zeroline:false, showticklabels:false,
@@ -116,7 +116,7 @@ var pieVisualization = function(value) {
   }];
 
   var pieLayout = {
-    title: 'Statistic'
+    title: 'Gender ratio'
   };
 
   Plotly.newPlot('pie-chart', pieData, pieLayout, {showLink: false});
@@ -127,7 +127,7 @@ var photoVisualization = function(values) {
   var container = document.createDocumentFragment();
 
   for (var key in values) {
-    var img = new Image(100);
+    var img = new Image(100, 100);
     img.src = values[key].url;
     container.appendChild(img);
   }
@@ -209,8 +209,18 @@ function polling(callback, url) {
 
   paintData();
 
-  var refreshBtn = document.getElementById('refresh-btn');
-  refreshBtn.addEventListener('click', paintData);
+  var chat = document.getElementById('chat');
+
+  var chatBtn = document.getElementById('chat-btn');
+  chatBtn.addEventListener('click', function() {
+    chat.classList.add('show');
+  });
+
+  document.addEventListener('click', function(evt) {
+    if(chat.classList.contains('show') && evt.target != chat && evt.target != chatBtn) {
+      chat.classList.remove('show');
+    }
+  });
 
   polling (paintData);
 }());

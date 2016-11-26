@@ -1,6 +1,4 @@
 .page-header {
-  padding-top: 30px;
-  padding-bottom: 30px;
   color: #fff;
   background-color: $bg-head;
   flex: 0 0 auto;
@@ -12,9 +10,14 @@
 
 .header-title {
   font-size: 24px;
+
+  @media (max-width: $xs-max) {
+    text-align: center;
+  }
 }
 
 .dashboards {
+  position: relative;
   padding-bottom: 20px;
   text-align: center;
   flex: 1 0 auto;
@@ -29,6 +32,15 @@
   width: $chart-size;
   height: $chart-size;
   position: relative;
+
+  @media (max-width: $xs-max) {
+    width: 100%;
+    height: 300px;
+  }
+}
+
+#gauge-chart {
+    margin-bottom: -100px;
 }
 
 .chart-img {
@@ -52,15 +64,82 @@
 .photos-bar img {
   margin: 0 10px;
   margin-bottom: 10px;
+  height: 100px;
+  width: auto;
+}
+
+.chat-container {
+  position: absolute;
+  width: 300px;
+  bottom: 0;
+  right: 0;
+  font-size: 0;
+  overflow: hidden;
+
+  @media (max-width: $xs-max) {
+    width: auto;
+    left: 0;
+  }
+
+  iframe {
+    height: 0;
+    border: none;
+    background-color: #fff;
+    transition: height 0.2s ease-in;
+
+    @media (max-width: $xs-max) {
+      width: 100%;
+    }
+  }
+}
+
+.show {
+  iframe {
+    height: 500px;
+    border: 1px solid rgb(31, 119, 180);
+  }
+}
+
+.chat-btn {
+  border-radius: 2px;
+  font-size: 18px;
+  padding: 5px 10px;
+  overflow: hidden;
+  background: rgba(158,158,158,.2);
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+  position: relative;
+  color: #000;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
+
+  &:active {
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12),0 2px 4px -1px rgba(0,0,0,.2);
+    background-color: rgba(158,158,158,.4);
+  }
+
+  @media (max-width: $xs-max) {
+    position: static;
+  }
 }
 
 .page-footer {
-  padding-top: 30px;
-  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: $bg-foot;
-  text-align: right;
   color: #fff;
   flex: 0 0 auto;
+  position: relative;
+
+  @media (max-width: $xs-max) {
+    text-align: center;
+  }
 }
 
 .logo-akvelon {

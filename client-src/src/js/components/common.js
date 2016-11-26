@@ -13,8 +13,18 @@
 
   paintData();
 
-  var refreshBtn = document.getElementById('refresh-btn');
-  refreshBtn.addEventListener('click', paintData);
+  var chat = document.getElementById('chat');
+
+  var chatBtn = document.getElementById('chat-btn');
+  chatBtn.addEventListener('click', function() {
+    chat.classList.add('show');
+  });
+
+  document.addEventListener('click', function(evt) {
+    if(chat.classList.contains('show') && evt.target != chat && evt.target != chatBtn) {
+      chat.classList.remove('show');
+    }
+  });
 
   polling (paintData);
 }());

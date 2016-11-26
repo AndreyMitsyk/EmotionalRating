@@ -4,7 +4,7 @@ var photoVisualization = function(values) {
   var container = document.createDocumentFragment();
 
   for (var key in values) {
-    var img = new Image(100);
+    var img = new Image(100, 100);
     img.src = values[key].url;
     container.appendChild(img);
   }

@@ -9,7 +9,7 @@ var pieVisualization = function(value) {
   }];
 
   var pieLayout = {
-    title: 'Statistic'
+    title: 'Gender ratio'
   };
 
   Plotly.newPlot('pie-chart', pieData, pieLayout, {showLink: false});

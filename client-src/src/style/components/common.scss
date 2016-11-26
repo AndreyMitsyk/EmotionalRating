@@ -35,9 +35,18 @@ body {
   max-width: $lg-min;
   margin: 0 auto;
   padding: 0 30px;
+
+  @media (max-width: $xs-max) {
+    padding: 0 15px;
+  }
 }
 
 .l-flex {
   display: flex;
   justify-content: space-between;
+
+ @media (max-width: $xs-max) {
+    display: block;
+    margin: 0 auto;
+  }
 }
