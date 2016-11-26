@@ -13,7 +13,7 @@
 
         private static Object mux = new Object();
 
-        private volatile long _version;
+        private long _version;
 
         private DataManager()
         {
