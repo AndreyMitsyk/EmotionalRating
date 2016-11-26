@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAzure.Storage.Table;
 using EmotionalRatingBot.CognitiveServices;
 using System;
+using System.Globalization;
 
 namespace EmotionalRatingBot.Storage
 {
@@ -11,7 +12,7 @@ namespace EmotionalRatingBot.Storage
             this.PartitionKey = emotion.ToString();
             this.RowKey = Guid.NewGuid().ToString();
             this.ImageUrl = imageUrl;
-            this.EmotionValue = emotionValue.ToString();
+            this.EmotionValue = Convert.ToString(emotionValue, CultureInfo.InvariantCulture);
             this.Sex = sex;
         }
 

@@ -3,6 +3,7 @@ using EmotionalRatingBot.CognitiveServices;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ProjectOxford.Face.Contract;
+using System.Globalization;
 
 namespace EmotionalRatingBot.Storage
 {
@@ -49,14 +50,14 @@ namespace EmotionalRatingBot.Storage
                 if (emotionData.ContainsKey(emotionName))
                 {
                     emotionData[emotionName].Value = emotionData[emotionName].Value + 1;
-                    if (float.Parse(entity.EmotionValue) > emotionData[emotionName].MaxValue)
+                    if (float.Parse(entity.EmotionValue, CultureInfo.InvariantCulture) > emotionData[emotionName].MaxValue)
                     {
-                        emotionData[emotionName].MaxValue = float.Parse(entity.EmotionValue);
+                        emotionData[emotionName].MaxValue = float.Parse(entity.EmotionValue, CultureInfo.InvariantCulture);
                         emotionData[emotionName].Url = entity.ImageUrl;
                     }
                 } else
                 {
-                    emotionData.Add(emotionName, new EmotionData(1, entity.ImageUrl, float.Parse(entity.EmotionValue)));
+                    emotionData.Add(emotionName, new EmotionData(1, entity.ImageUrl, float.Parse(entity.EmotionValue, CultureInfo.InvariantCulture)));
                 }
                 if (entity.Sex == "male")
                 {
