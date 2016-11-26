@@ -3,30 +3,55 @@
   padding-bottom: 30px;
   color: #fff;
   background-color: $bg-head;
+  flex: 0 0 auto;
+
   a {
     color: #fff;
   }
 }
 
+.header-title {
+  font-size: 24px;
+}
+
 .dashboards {
-  padding-top: 50px;
-  padding-bottom: 45px;
+  padding-bottom: 20px;
   text-align: center;
+  flex: 1 0 auto;
 
   .l-flex {
-    @media (max-width: $xs-max) {
-      display: block;
-    }
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
 .chart {
   width: $chart-size;
   height: $chart-size;
+  position: relative;
+}
+
+.chart-img {
+  width: 100px;
+  height: 100px;
+  top: 0;
+  right: 0;
+  position: absolute;
+  display: none;
+  background-color: #000;
+}
+
+.chart-img.show {
+  display: block;
 }
 
 .js-plotly-plot .plotly:hover .modebar--hover {
   display: none;
+}
+
+.photos-bar img {
+  margin: 0 10px;
+  margin-bottom: 10px;
 }
 
 .page-footer {
@@ -35,6 +60,7 @@
   background-color: $bg-foot;
   text-align: right;
   color: #fff;
+  flex: 0 0 auto;
 }
 
 .logo-akvelon {

@@ -1,3 +1,7 @@
+html{
+    height: 100%;
+}
+
 body {
   min-width: $min-width;
   font-family: $font;
@@ -6,10 +10,16 @@ body {
   line-height: 1.42857143;
   color: #000;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .btn {
   @include m-btn;
+
+  flex: 0 0 auto;
+
   &:hover {
     background-color: $btn-h;
     color: #fff;

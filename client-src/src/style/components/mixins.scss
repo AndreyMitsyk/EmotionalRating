@@ -6,8 +6,8 @@
 
 @mixin m-btn {
   display: inline-block;
-  width: 100%;
-  padding: 20px 0;
+  padding: 20px 20px;
+  border-radius: 2px;
   text-transform: uppercase;
   text-decoration: none;
   font-family: $font-b;
@@ -19,6 +19,7 @@
   outline: none;
   color: #fff;
   background-color: $btn-c;
+  cursor: pointer;
 }
 
 @mixin m-icon($icon-name) {
