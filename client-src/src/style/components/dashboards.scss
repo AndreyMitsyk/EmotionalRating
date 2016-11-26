@@ -146,3 +146,13 @@
   width: 200px;
   height: auto;
 }
+
+.right-link {
+  float: right;
+  margin-left: 10px;
+
+  a {
+    display: block;
+  }
+}
+
