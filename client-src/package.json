@@ -1,0 +1,23 @@
+{
+  "name": "emotional-rating-client",
+  "version": "1.0.0",
+  "author": "First Wanderer",
+  "devDependencies": {
+    "browser-sync": "^2.9.11",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-htmlhint": "^0.3.0",
+    "gulp-imagemin": "^2.3.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rigger": "^0.5.8",
+    "gulp-sass": "^2.1.1",
+    "gulp-uglify": "^1.4.2",
+    "gulp-watch": "^4.3.5",
+    "imagemin-pngquant": "^4.2.0",
+    "normalize.css": "^5.0.0",
+    "rimraf": "^2.4.3",
+    "run-sequence": "^1.2.2"
+  }
+}

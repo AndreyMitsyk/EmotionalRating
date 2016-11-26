@@ -1,0 +1,15 @@
+/*
+* External modules
+*/
+@import "../../node_modules/normalize.css/normalize.css";
+
+/*
+* Custom
+*/
+// Basic styles
+@import "components/variables.scss";
+@import "components/mixins.scss";
+// Styles blocks
+@import "components/dashboards.scss";
+// Other modules
+@import "components/common.scss";

@@ -1,0 +1,52 @@
+html{
+    height: 100%;
+}
+
+body {
+  min-width: $min-width;
+  font-family: $font;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.42857143;
+  color: #000;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.btn {
+  @include m-btn;
+
+  flex: 0 0 auto;
+
+  &:hover {
+    background-color: $btn-h;
+    color: #fff;
+  }
+  &:active {
+    color: $btn-a;
+    opacity: 1;
+  }
+}
+
+.l-container {
+  position: relative;
+  max-width: $lg-min;
+  margin: 0 auto;
+  padding: 0 30px;
+
+  @media (max-width: $xs-max) {
+    padding: 0 15px;
+  }
+}
+
+.l-flex {
+  display: flex;
+  justify-content: space-between;
+
+ @media (max-width: $xs-max) {
+    display: block;
+    margin: 0 auto;
+  }
+}
