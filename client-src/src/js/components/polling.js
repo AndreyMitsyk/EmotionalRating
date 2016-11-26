@@ -1,6 +1,8 @@
-function polling(url, callback, version) {
-  if(!version){
-      version=0;
+function polling(callback, url, version) {
+  url = url || "api/update";
+
+  if(version == undefined){
+      version = 0;
   }
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
@@ -8,14 +10,14 @@ function polling(url, callback, version) {
         if(xhr.status == 200) {
             var newVersion = parseInt(xhr.responseText);
             if(Number.isNaN(newVersion)){
-                polling(url, callback, version+1);
+                polling(callback, url, version+1);
             }else{
-                polling(url, callback, newVersion);
+                polling(callback, url, newVersion);
             }
             callback();
          }
          if(xhr.status == 304){
-             polling(url, callback, version);
+             polling(callback, url, version);
          }
     }
   }

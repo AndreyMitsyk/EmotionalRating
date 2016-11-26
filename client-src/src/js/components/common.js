@@ -15,4 +15,6 @@
 
   var refreshBtn = document.getElementById('refresh-btn');
   refreshBtn.addEventListener('click', paintData);
+
+  polling (paintData);
 }());

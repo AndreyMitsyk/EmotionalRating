@@ -1,5 +1,5 @@
 var getData = function(callback) {
-  var DATA_URL = window.location.href + 'api/data';
+  var DATA_URL = 'api/data';
   var dashboards = document.querySelector('.dashboards');
   var xhr = new XMLHttpRequest();
 
