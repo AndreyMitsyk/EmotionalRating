@@ -29,28 +29,34 @@ namespace EmotionalRatingBot
                 if (activity.Attachments != null && activity.Attachments.Count > 0)
                 {
                     var photo = activity.Attachments[0];
-                    BlobStorageProvider blobProvider = new BlobStorageProvider();
-                    var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
-                    FaceProvider faceProvider = new FaceProvider();
-                    var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
+                    if (!photo.ContentType.Contains("webp"))
+                    {
+                        BlobStorageProvider blobProvider = new BlobStorageProvider();
+                        var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
+                        FaceProvider faceProvider = new FaceProvider();
+                        var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
 
-                    if (faces != null)
-                    {
-                        reply = activity.CreateReply($"Thanks for your rating! See more results here: http://akvelonrating.azurewebsites.net/");
-                        await ImageProcessingService.GetService().Process(imageBlob, faces);
-                        var attachments = new List<Attachment>();
-                        attachments.Add(new Attachment()
+                        if (faces != null)
                         {
-                            ContentUrl = imageBlob.Uri.AbsoluteUri,
-                            ContentType = photo.ContentType,
-                            Name = photo.Name
-                        });
-                        reply.Attachments = attachments;
-                    }
-                    else
+                            reply = activity.CreateReply($"Thanks for your rating! See more results here: http://akvelonrating.azurewebsites.net/");
+                            await ImageProcessingService.GetService().Process(imageBlob, faces);
+                            var attachments = new List<Attachment>();
+                            attachments.Add(new Attachment()
+                            {
+                                ContentUrl = imageBlob.Uri.AbsoluteUri,
+                                ContentType = photo.ContentType,
+                                Name = photo.Name
+                            });
+                            reply.Attachments = attachments;
+                        }
+                        else
+                        {
+                            await imageBlob.DeleteAsync();
+                            reply = activity.CreateReply($"Sorry. Faces were not found.");
+                        }
+                    } else
                     {
-                        await imageBlob.DeleteAsync();
-                        reply = activity.CreateReply($"Sorry. Faces were not found.");
+                        reply = activity.CreateReply($"I'm not sure, that you look like this... Please send your selfie, to participate in the rating.");
                     }
                 }
                 else
