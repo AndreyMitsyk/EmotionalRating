@@ -14,7 +14,7 @@ namespace EmotionalRatingBot.Controllers
 
     public class UpdateController : ApiController
     {
-        private const int LONG_TIMEOUT_SEC = 100;
+        private const int LONG_TIMEOUT_SEC = 10;
 
         private const string VERSION_HEADER_NAME = "Version";
 
@@ -22,14 +22,14 @@ namespace EmotionalRatingBot.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            var task = DataManager.getInstance().IsUpdated(this.ParseVersionHeader(Request.Headers));
-            if (task.Wait(LONG_TIMEOUT_SEC * 1000))
+            var currentVersion = DataManager.GetInstance().GetVersion();
+            if(currentVersion <= this.ParseVersionHeader(Request.Headers))
             {
-                return Request.CreateResponse(HttpStatusCode.OK, task.Result.ToString());
+                return Request.CreateResponse(HttpStatusCode.NotModified);
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.NotModified);
+                return Request.CreateResponse(HttpStatusCode.OK, currentVersion);
             }
         }
 
@@ -45,7 +45,6 @@ namespace EmotionalRatingBot.Controllers
                     return version;
                 }
             }
-
             return -1;
         }
     }

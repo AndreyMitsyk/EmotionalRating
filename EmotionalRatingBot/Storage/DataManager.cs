@@ -7,7 +7,7 @@
 
     using EmotionalRatingBot.ImageCore;
 
-    public class DataManager
+    public class DataManager : ReaderWriterLockSlim
     {
         private static DataManager manager;
 
@@ -19,7 +19,7 @@
         {
         }
 
-        public static DataManager getInstance()
+        public static DataManager GetInstance()
         {
             if (manager == null)
             {
@@ -33,20 +33,17 @@
 
         public void Update()
         {
+            this.EnterWriteLock();
             this._version++;
+            this.ExitWriteLock();
         }
 
-        public Task<long> IsUpdated(long version)
+        public long GetVersion()
         {
-            Task<long> t = Task.Run(
-                () =>
-                    {
-                        while (version >= this._version)
-                        {
-                        }
-                        return this._version;
-                    });
-            return t;
+            this.EnterReadLock();
+            var version = this._version;
+            this.ExitReadLock();
+            return version;
         }
     }
 }
