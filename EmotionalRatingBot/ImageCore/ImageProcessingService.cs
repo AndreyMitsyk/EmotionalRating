@@ -1,7 +1,5 @@
 ﻿namespace EmotionalRatingBot.ImageCore
 {
-    using System;
-    using System.Data.Services.Client;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.IO;

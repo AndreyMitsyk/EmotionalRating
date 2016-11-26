@@ -21,12 +21,12 @@ namespace EmotionalRatingBot
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+            Activity reply = activity.CreateReply("Please send your selfie, to participate in the rating.");
+
             if (activity.Type == ActivityTypes.Message)
             {
-                ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                Activity reply;
-
-                if (activity.Attachments.Count > 0)
+                if (activity.Attachments != null && activity.Attachments.Count > 0)
                 {
                     var photo = activity.Attachments[0];
                     BlobStorageProvider blobProvider = new BlobStorageProvider();
@@ -36,8 +36,7 @@ namespace EmotionalRatingBot
 
                     if (faces != null)
                     {
-                        // TODO: add link
-                        reply = activity.CreateReply($"Thanks for your rating!\n See more results here:");
+                        reply = activity.CreateReply($"Thanks for your rating! See more results here: http://akvelonrating.azurewebsites.net/");
                         await ImageProcessingService.GetService().Process(imageBlob, faces);
                         var attachments = new List<Attachment>();
                         attachments.Add(new Attachment()
@@ -56,46 +55,16 @@ namespace EmotionalRatingBot
                 }
                 else
                 {
-                    reply = activity.CreateReply($"Please send your selfie, to participate in the rating.");
+                    if (activity.Text.ToLower().Contains("start") || activity.Text.ToLower().Contains("help"))
+                    {
+                        reply = activity.CreateReply("Hello! I'm Akvelon Emotional Rating bot! I am receiving the photo (selfie) and I am making an assessment of the event in accordance with the emotions on selfie. Send your foto, to participate in the rating.");
+                    }
                 }
+            }
 
-                await connector.Conversations.ReplyToActivityAsync(reply);
-            }
-            else
-            {
-                HandleSystemMessage(activity);
-            }
+            await connector.Conversations.ReplyToActivityAsync(reply);
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
-        }
-
-        private Activity HandleSystemMessage(Activity message)
-        {
-            if (message.Type == ActivityTypes.DeleteUserData)
-            {
-                // Implement user deletion here
-                // If we handle user deletion, return a real message
-            }
-            else if (message.Type == ActivityTypes.ConversationUpdate)
-            {
-                // Handle conversation state changes, like members being added and removed
-                // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
-                // Not available in all channels
-            }
-            else if (message.Type == ActivityTypes.ContactRelationUpdate)
-            {
-                // Handle add/remove from contact lists
-                // Activity.From + Activity.Action represent what happened
-            }
-            else if (message.Type == ActivityTypes.Typing)
-            {
-                // Handle knowing tha the user is typing
-            }
-            else if (message.Type == ActivityTypes.Ping)
-            {
-            }
-
-            return null;
         }
     }
 }

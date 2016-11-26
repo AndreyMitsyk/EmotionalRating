@@ -2,9 +2,7 @@
 using EmotionalRatingBot.CognitiveServices;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.ProjectOxford.Emotion.Contract;
 using Microsoft.ProjectOxford.Face.Contract;
-using System;
 
 namespace EmotionalRatingBot.Storage
 {
