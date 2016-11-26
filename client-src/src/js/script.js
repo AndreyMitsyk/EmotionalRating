@@ -14,6 +14,7 @@
 //= components/pieChart.js
 //= components/photosBar.js
 //= components/getData.js
+//= components/polling.js
 //= components/common.js
 
 
