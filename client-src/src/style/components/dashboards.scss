@@ -145,11 +145,24 @@
 .logo-akvelon {
   width: 200px;
   height: auto;
+  margin-top: 27px;
+
+  @media (max-width: $xs-max) {
+    margin: 0 auto;
+    margin-bottom: 20px;
+    display: block;
+  }
 }
 
 .right-link {
   float: right;
   margin-left: 10px;
+  text-align: center;
+
+  @media (max-width: $xs-max) {
+    float: none;
+    display: inline-block;
+  }
 
   a {
     display: block;
