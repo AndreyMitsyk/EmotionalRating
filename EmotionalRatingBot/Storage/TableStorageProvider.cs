@@ -28,6 +28,7 @@ namespace EmotionalRatingBot.Storage
 
             // Execute the insert operation.
             table.Execute(insertOperation);
+            DataManager.getInstance().Update();
         }
 
         public ChartData GetChartData()

@@ -181,6 +181,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="CognitiveServices\EmotionProvider.cs" />
     <Compile Include="CognitiveServices\Emotions.cs" />
+    <Compile Include="Controllers\UpdateController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -197,6 +198,7 @@
     <Compile Include="Storage\BlobStorageProvider.cs" />
     <Compile Include="Storage\ChartData.cs" />
     <Compile Include="Storage\ConfigurationProvider.cs" />
+    <Compile Include="Storage\DataManager.cs" />
     <Compile Include="Storage\EmotionData.cs" />
     <Compile Include="Storage\SelfieData.cs" />
     <Compile Include="Storage\TableStorageProvider.cs" />
