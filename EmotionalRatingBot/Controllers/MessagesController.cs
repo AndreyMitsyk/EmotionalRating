@@ -22,7 +22,7 @@ namespace EmotionalRatingBot
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-            Activity reply = activity.CreateReply("Please send your selfie, to participate in the rating.");
+            Activity reply = activity.CreateReply("Чтобы оценить мероприятие, отправьте ваше селфи.");
 
             if (activity.Type == ActivityTypes.Message)
             {
@@ -38,7 +38,7 @@ namespace EmotionalRatingBot
 
                         if (faces != null)
                         {
-                            reply = activity.CreateReply($"Thanks for your rating! See more results here: http://akvelonrating.azurewebsites.net/");
+                            reply = activity.CreateReply($"Спасибо за оценку! Общие результаты доступны по ссылке: http://akvelonrating.azurewebsites.net/");
                             await ImageProcessingService.GetService().Process(imageBlob, faces);
                             var attachments = new List<Attachment>();
                             attachments.Add(new Attachment()
@@ -52,18 +52,18 @@ namespace EmotionalRatingBot
                         else
                         {
                             await imageBlob.DeleteAsync();
-                            reply = activity.CreateReply($"Sorry. Faces were not found.");
+                            reply = activity.CreateReply($"Извините, не удалось распознать лица.");
                         }
                     } else
                     {
-                        reply = activity.CreateReply($"I'm not sure, that you look like this... Please send your selfie, to participate in the rating.");
+                        reply = activity.CreateReply($"Я не уверен, что вы выглядите так... Чтобы оценить мероприятие, отправьте ваше селфи.");
                     }
                 }
                 else
                 {
-                    if (activity.Text.ToLower().Contains("start") || activity.Text.ToLower().Contains("help"))
+                    if (activity.Text.ToLower().Contains("start") || activity.Text.ToLower().Contains("help") || activity.Text.ToLower().Contains("привет") || activity.Text.ToLower().Contains("помощь"))
                     {
-                        reply = activity.CreateReply("Hello! I'm Akvelon Emotional Rating bot! I am receiving the photo (selfie) and I am making an assessment of the event in accordance with the emotions on selfie. Send your foto, to participate in the rating.");
+                        reply = activity.CreateReply("Привет! Я Akvelon Emotional Rating бот! Я принимаю фото (селфи) и делаю оценку мероприятия в соответствии с эмоциями на фотографии. Отправьте свое селфи, чтобы принять участие.");
                     }
                 }
             }
