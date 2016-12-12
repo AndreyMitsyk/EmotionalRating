@@ -9,6 +9,20 @@
  (function() {
 'use strict';
 
+  
+  function getLocalizedEmotions() {
+    var emotionArray = {};
+    emotionArray["anger"] = "Гнев";
+    emotionArray["contempt"] = "Презрение";
+    emotionArray["disgust"] = "Отвращение";
+    emotionArray["fear"] = "Страх";
+    emotionArray["happiness"] = "Счастье";
+    emotionArray["neutral"] = "Нейтральный";
+    emotionArray["sadness"] = "Грусть";
+    emotionArray["surprise"] = "Удивление";
+    return emotionArray;
+  }
+
 // Gauge chart
 // Enter a speed between 0 and 180
 var gaugeVisualization = function(value) {
@@ -40,8 +54,8 @@ var gaugeVisualization = function(value) {
       hoverinfo: 'text+name'},
     { values: [50/6, 50/6, 50/6, 50/6, 50/6, 50/6, 50],
     rotation: 90,
-    text: ['THE BEST', 'Avesome', 'Good', 'Normal',
-              'Useless', 'Disgusting', ''],
+    text: ['ЛУЧШЕЕ!', 'Потрясающе', 'Хорошо', 'Нормально',
+              'Бесполезно', 'Отвратительно', ''],
     textinfo: 'text',
     textposition:'inside',
     marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
@@ -64,7 +78,7 @@ var gaugeVisualization = function(value) {
           color: '850000'
         }
       }],
-    title: 'Common rating',
+    title: 'Общая оценка',
     xaxis: {zeroline:false, showticklabels:false,
                showgrid: false, range: [-1, 1]},
     yaxis: {zeroline:false, showticklabels:false,
@@ -75,11 +89,13 @@ var gaugeVisualization = function(value) {
 };
 // Bar chart
 var barVisualization = function(values) {
+  var emotionArray = getLocalizedEmotions();
+  
   var emotionNames = [];
   var emotionCounts = [];
 
   for (var key in values) {
-    emotionNames.push(key);
+    emotionNames.push(emotionArray[key]);
     emotionCounts.push(values[key].value);
   }
 
@@ -100,7 +116,7 @@ var barVisualization = function(values) {
   var barData = [barTrace1];
 
   var barLayout = {
-    title: 'Emotions'
+    title: 'Эмоции'
   };
 
   Plotly.newPlot('bar-chart', barData, barLayout);
@@ -109,14 +125,14 @@ var barVisualization = function(values) {
 var pieVisualization = function(value) {
   var pieData = [{
     values: [value, 100 - value],
-    labels: ['male', 'female'],
+    labels: ['Мужчин', 'Женщин'],
     hole: .4,
     type: 'pie',
     hoverinfo: 'label+percent'
   }];
 
   var pieLayout = {
-    title: 'Gender ratio'
+    title: 'Соотношение мужчин/женщин'
   };
 
   Plotly.newPlot('pie-chart', pieData, pieLayout, {showLink: false});
@@ -125,11 +141,19 @@ var pieVisualization = function(value) {
 var photoVisualization = function(values) {
   var photoContainer = document.getElementById('photos-bar');
   var container = document.createDocumentFragment();
-
+  var emotionArray = getLocalizedEmotions();
+  
   for (var key in values) {
+    var imageSpan = document.createElement('span');
+    var imageP = document.createElement('p');
+    imageP.innerText = emotionArray[key];
+    
     var img = new Image(100, 100);
     img.src = values[key].url;
-    container.appendChild(img);
+    
+    imageSpan.appendChild(imageP);
+    imageSpan.appendChild(img);
+    container.appendChild(imageSpan);
   }
 
   photoContainer.innerHTML = '';
