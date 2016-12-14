@@ -34,25 +34,33 @@ namespace EmotionalRatingBot
                         BlobStorageProvider blobProvider = new BlobStorageProvider();
                         var imageBlob = blobProvider.SaveImage(photo.ContentUrl, photo.ContentType);
                         FaceProvider faceProvider = new FaceProvider();
-                        var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
+                        try
+                        {
+                            var faces = await faceProvider.GetFaces(imageBlob.Uri.AbsoluteUri);
 
-                        if (faces != null)
-                        {
-                            reply = activity.CreateReply($"Спасибо за оценку! Общие результаты доступны по ссылке: http://akvelonrating.azurewebsites.net/");
-                            await ImageProcessingService.GetService().Process(imageBlob, faces);
-                            var attachments = new List<Attachment>();
-                            attachments.Add(new Attachment()
+                            if (faces != null)
                             {
-                                ContentUrl = imageBlob.Uri.AbsoluteUri,
-                                ContentType = photo.ContentType,
-                                Name = photo.Name
-                            });
-                            reply.Attachments = attachments;
+                                var emotions = await ImageProcessingService.GetService().Process(imageBlob, faces);
+
+                                reply = activity.CreateReply($"Спасибо за оценку! {emotions} Общие результаты доступны по ссылке: http://akvelonrating.azurewebsites.net/");
+                                var attachments = new List<Attachment>();
+                                attachments.Add(new Attachment()
+                                {
+                                    ContentUrl = imageBlob.Uri.AbsoluteUri,
+                                    ContentType = photo.ContentType,
+                                    Name = photo.Name
+                                });
+                                reply.Attachments = attachments;
+                            }
+                            else
+                            {
+                                await imageBlob.DeleteAsync();
+                                reply = activity.CreateReply($"Извините, не удалось распознать лица.");
+                            }
                         }
-                        else
+                        catch
                         {
-                            await imageBlob.DeleteAsync();
-                            reply = activity.CreateReply($"Извините, не удалось распознать лица.");
+                            reply = activity.CreateReply($"Извините, произошла ошибка. Попробуйте повторить позднее.");
                         }
                     } else
                     {
