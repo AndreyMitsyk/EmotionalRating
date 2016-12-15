@@ -42,7 +42,7 @@ namespace EmotionalRatingBot.Storage
 
             int maleCount = 0;
             int totalCount = 0;
-            var tableData = table.ExecuteQuery(query);
+            var tableData = table.ExecuteQuery(query).OrderByDescending(r => r.Timestamp);
             if (tableData == null || !tableData.Any())
             {
                 return null;
