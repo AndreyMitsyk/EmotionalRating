@@ -22,7 +22,7 @@ namespace EmotionalRatingBot
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
             ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-            Activity reply = activity.CreateReply("Чтобы оценить мероприятие, отправьте ваше селфи.");
+            Activity reply = activity.CreateReply("Отправьте ваше селфи для участия в конкурсе.");
 
             if (activity.Type == ActivityTypes.Message)
             {
@@ -42,7 +42,7 @@ namespace EmotionalRatingBot
                             {
                                 var emotions = await ImageProcessingService.GetService().Process(imageBlob, faces);
 
-                                reply = activity.CreateReply($"Спасибо за оценку! {emotions} Общие результаты доступны по ссылке: http://akvelonrating.azurewebsites.net/");
+                                reply = activity.CreateReply($"Спасибо за участие! {emotions} Общие результаты доступны по ссылке: http://akvelonrating.azurewebsites.net/");
                                 var attachments = new List<Attachment>();
                                 attachments.Add(new Attachment()
                                 {
@@ -64,14 +64,14 @@ namespace EmotionalRatingBot
                         }
                     } else
                     {
-                        reply = activity.CreateReply($"Я не уверен, что вы выглядите так... Чтобы оценить мероприятие, отправьте ваше селфи.");
+                        reply = activity.CreateReply($"Я не уверен, что вы выглядите так... Отправьте ваше селфи для участия в конкурсе.");
                     }
                 }
                 else
                 {
                     if (activity.Text.ToLower().Contains("start") || activity.Text.ToLower().Contains("help") || activity.Text.ToLower().Contains("привет") || activity.Text.ToLower().Contains("помощь"))
                     {
-                        reply = activity.CreateReply("Привет! Я Akvelon Emotional Rating бот! Я принимаю фото (селфи) и делаю оценку мероприятия в соответствии с эмоциями на фотографии. Отправьте свое селфи, чтобы принять участие.");
+                        reply = activity.CreateReply("Привет! Я Akvelon Emotional Rating бот! Я принимаю фото (селфи) и нахожу максимальные эмоции на фотографии. Отправьте свое селфи, чтобы принять участие.");
                     }
                 }
             }

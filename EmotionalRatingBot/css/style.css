@@ -227,8 +227,9 @@ template {
     justify-content: center
 }
 .chart {
-    width: 400px;
-    height: 400px
+    width: 100%;
+    height: 300px;
+    margin-top: -50px;
 }
 @media (max-width: 767px) {
     .header-title {
@@ -272,7 +273,7 @@ template {
     margin-bottom: auto;
 }
 .photos-bar.timeline img {
-    height: 100px;
+    height: 150px;
 }
 .chat-container {
     width: 300px;
@@ -327,8 +328,6 @@ body {
     }
 }
 .page-footer {
-    padding-top: 10px;
-    padding-bottom: 10px;
     background-color: #212121;
     color: #fff;
     -webkit-box-flex: 0;
@@ -337,9 +336,9 @@ body {
     position: relative
 }
 .logo-akvelon {
-    width: 200px;
+    width: 150px;
     height: auto;
-    margin-top: 27px
+    margin-top: 15px
 }
 body,
 html {
@@ -353,7 +352,7 @@ html {
 }
 .right-link {
     float: right;
-    margin-left: 10px;
+    margin-left: 50px;
     text-align: center
 }
 @media (max-width: 767px) {
@@ -408,6 +407,10 @@ body {
     position: relative;
     margin: 0 auto;
     padding: 0 30px
+}
+.l-container.l-flex .text {
+    padding-bottom: 20px;
+    font-size: 30px;
 }
 .l-flex {
     display: -webkit-box;

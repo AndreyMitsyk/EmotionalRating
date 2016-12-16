@@ -10,7 +10,7 @@ namespace EmotionalRatingBot.Storage
 {
     public class TableStorageProvider
     {
-        private const string EventName = "HAKVELON";
+        private const string EventName = "Meetup";
         // Create the table client.
         private CloudTableClient tableClient = ConfigurationProvider.CreateCloudStorageAccount().CreateCloudTableClient();
 

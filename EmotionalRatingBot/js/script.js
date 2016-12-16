@@ -17,7 +17,7 @@
         emotionArray["disgust"] = "Отвращение";
         emotionArray["fear"] = "Страх";
         emotionArray["happiness"] = "Счастье";
-        emotionArray["neutral"] = "Нейтральный";
+        emotionArray["neutral"] = "Без эмоций";
         emotionArray["sadness"] = "Грусть";
         emotionArray["surprise"] = "Удивление";
         return emotionArray;
@@ -109,23 +109,20 @@
         }
 
         var barTrace1 = {
-            x: emotionNames,
-            y: emotionCounts,
+            y: emotionNames,
+            x: emotionCounts,
             marker: {
                 color: 'rgb(158,202,225)',
-                opacity: 0.6,
-                line: {
-                    color: 'rbg(8,48,107)',
-                    width: 1.5
-                }
+                opacity: 0.6
             },
+            orientation: 'h',
             type: 'bar'
         };
 
         var barData = [barTrace1];
 
         var barLayout = {
-            title: 'Эмоции'
+            //title: 'Эмоции'
         };
 
         Plotly.newPlot('bar-chart', barData, barLayout);
@@ -164,8 +161,11 @@
             imageSpan.appendChild(img);
             container.appendChild(imageSpan);
         }
-
+        var imageText = document.createElement('p');
+        imageText.className = 'text';
+        imageText.innerText = "Лидеры:";
         photoContainer.innerHTML = '';
+        photoContainer.appendChild(imageText);
         photoContainer.appendChild(container);
     };
     var timelineVisualization = function (values) {
@@ -182,6 +182,7 @@
         }
         var imageP = document.createElement('p');
         imageP.innerText = "Последние фотографии:";
+        imageP.className = 'text';
         photoContainer.innerHTML = '';
         photoContainer.appendChild(imageP);
         photoContainer.appendChild(container);
