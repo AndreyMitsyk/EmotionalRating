@@ -51,7 +51,10 @@ namespace EmotionalRatingBot.Storage
             {
                 if (lastPhotos.Count <= 5)
                 {
-                    lastPhotos.Add(entity.ImageUrl);
+                    if (!lastPhotos.Any(u => u == entity.ImageUrl))
+                    {
+                        lastPhotos.Add(entity.ImageUrl);
+                    }
                 }
 
                 string emotionName = entity.PartitionKey;

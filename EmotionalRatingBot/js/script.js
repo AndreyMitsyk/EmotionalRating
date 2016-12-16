@@ -181,7 +181,7 @@
             container.appendChild(img);
         }
         var imageP = document.createElement('p');
-        imageP.innerText = "Последние лица:";
+        imageP.innerText = "Последние фотографии:";
         photoContainer.innerHTML = '';
         photoContainer.appendChild(imageP);
         photoContainer.appendChild(container);
