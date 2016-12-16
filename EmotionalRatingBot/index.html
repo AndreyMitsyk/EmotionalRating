@@ -1,51 +1,44 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>EmotionalRating</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/img-shortcut.ico">
     <link rel="stylesheet" href="css/style.css">
-  </head>
-  <body>
-
-    <header class="page-header">
-      <div class="l-container l-flex">
-        <h1 class="header-title">Emotional Rating</h1>
-      </div>
-    </header>
+</head>
+<body>
 
     <div class="dashboards">
-      <div class="l-container l-flex">
-        <section class="chart" id="gauge-chart"></section>
-        <section class="chart" id="bar-chart"></section>
-        <section class="chart" id="pie-chart"></section>
-      </div>
-      <div class="l-container l-flex">
-        <div class="photos-bar" id="photos-bar"></div>
-      </div>
-      <button class="chat-btn" id="chat-btn">AkvelonBot</button>
+        <div class="l-container l-flex">
+            <!--<section class="chart" id="gauge-chart"></section>-->
+            <section class="chart" id="bar-chart"></section>
+            <!--<section class="chart" id="pie-chart"></section>-->
+            <div class="photos-bar timeline" id="timeline"></div>
+        </div>
+        <div class="l-container l-flex">
+            <div class="photos-bar" id="photos-bar"></div>
+        </div>
+        <button class="chat-btn" id="chat-btn">AkvelonBot</button>
     </div>
 
     <footer class="page-footer">
-      <div class="l-container">
-        <img src="img/logo-akvelon.png" alt="logo" class="logo-akvelon" width="554" height="138">
-        <div class="right-link">
-          <a href="http://qrcoder.ru" target="_blank"><img src="http://qrcoder.ru/code/?http%3A%2F%2Fakvelonrating.azurewebsites.net%2F&2&0" width="74" height="74" border="0" title="QR код"></a>
-          web view
+        <div class="l-container">
+            <img src="img/logo-akvelon.png" alt="logo" class="logo-akvelon" width="554" height="138">
+            <div class="right-link">
+                <p>Web site: http://akvelonrating.azurewebsites.net/</p>
+            </div>
+            <div class="right-link">
+                <p>Telegram: @akvelonBot</p>
+            </div>
         </div>
-        <div class="right-link">
-          <a href="http://qrcoder.ru" target="_blank"><img src="http://qrcoder.ru/code/?https%3A%2F%2Ftelegram.me%2FakvelonBot&2&0" width="74" height="74" border="0" title="QR код"></a>
-          @akvelonBot
+        <div class="chat-container" id="chat">
+            <iframe src='https://webchat.botframework.com/embed/AkvelonBot?s=giJV-9g16zc.cwA.1Zs.xS8fpF7jq7GuS8Digx5lUip40ekDjsZncTAYUEKpkug'></iframe>
         </div>
-      </div>
-      <div class="chat-container" id="chat">
-        <iframe src='https://webchat.botframework.com/embed/AkvelonBot?s=giJV-9g16zc.cwA.1Zs.xS8fpF7jq7GuS8Digx5lUip40ekDjsZncTAYUEKpkug'></iframe>
-      </div>
     </footer>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="js/script.js"></script>
-  </body>
+</body>
 </html>

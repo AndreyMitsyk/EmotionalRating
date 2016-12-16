@@ -12,5 +12,7 @@ namespace EmotionalRatingBot.Storage
         public IDictionary<string, EmotionData> Emotions { get; set; }
 
         public float Sex { get; set; }
+
+        public IList<string> LastPhotos { get; set; }
     }
 }

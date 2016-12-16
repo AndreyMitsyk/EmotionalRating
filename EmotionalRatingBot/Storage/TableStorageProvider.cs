@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ProjectOxford.Face.Contract;
 using System.Globalization;
+using System;
 
 namespace EmotionalRatingBot.Storage
 {
     public class TableStorageProvider
     {
-        private const string EventName = "HAKVELON";
+        private const string EventName = "Meetup";
         // Create the table client.
         private CloudTableClient tableClient = ConfigurationProvider.CreateCloudStorageAccount().CreateCloudTableClient();
 
@@ -37,15 +38,25 @@ namespace EmotionalRatingBot.Storage
             TableQuery<SelfieData> query = new TableQuery<SelfieData>().Where(TableQuery.GenerateFilterCondition("Event", QueryComparisons.Equal, EventName));
             var chartData = new ChartData();
             Dictionary<string, EmotionData> emotionData = new Dictionary<string, EmotionData>();
+            IList<string> lastPhotos = new List<string>();
+
             int maleCount = 0;
             int totalCount = 0;
-            var tableData = table.ExecuteQuery(query);
+            var tableData = table.ExecuteQuery(query).OrderByDescending(r => r.Timestamp);
             if (tableData == null || !tableData.Any())
             {
                 return null;
             }
             foreach (var entity in tableData)
             {
+                if (lastPhotos.Count <= 5)
+                {
+                    if (!lastPhotos.Any(u => u == entity.ImageUrl))
+                    {
+                        lastPhotos.Add(entity.ImageUrl);
+                    }
+                }
+
                 string emotionName = entity.PartitionKey;
                 if (emotionData.ContainsKey(emotionName))
                 {
@@ -89,6 +100,7 @@ namespace EmotionalRatingBot.Storage
                     goodEmotions += (float)(emotion.Value.Value * 0.25);
                 }
             }
+            chartData.LastPhotos = lastPhotos;
             chartData.PrimaryRating = (int)(goodEmotions / (float)totalCount * 100);
             chartData.Emotions = emotionData;
 
